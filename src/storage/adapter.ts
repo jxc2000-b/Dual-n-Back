@@ -10,6 +10,9 @@ export interface StorageAdapter {
 
   appendSet(set: SetResult): Promise<void>;
   listSets(opts?: { sinceMs?: number; limit?: number }): Promise<SetResult[]>;
+  /** Wipe set history but keep settings. */
+  clearSets(): Promise<void>;
+  /** Wipe everything — settings and sets. */
   clearAll(): Promise<void>;
 }
 

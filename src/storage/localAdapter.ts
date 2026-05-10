@@ -31,6 +31,10 @@ export class LocalStorageAdapter implements StorageAdapter {
     return sets;
   }
 
+  async clearSets(): Promise<void> {
+    localStorage.removeItem(KEY_SETS);
+  }
+
   async clearAll(): Promise<void> {
     localStorage.removeItem(KEY_SETTINGS);
     localStorage.removeItem(KEY_SETS);

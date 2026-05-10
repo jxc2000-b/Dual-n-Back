@@ -26,6 +26,9 @@ export class SupabaseAdapter implements StorageAdapter {
   async listSets(): Promise<SetResult[]> {
     throw new Error('SupabaseAdapter.listSets: not implemented');
   }
+  async clearSets(): Promise<void> {
+    throw new Error('SupabaseAdapter.clearSets: not implemented');
+  }
   async clearAll(): Promise<void> {
     throw new Error('SupabaseAdapter.clearAll: not implemented');
   }
