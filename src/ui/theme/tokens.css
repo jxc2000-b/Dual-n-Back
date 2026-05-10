@@ -71,4 +71,9 @@
   /* Shadows — subtle, this is a muted theme */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-stim: 0 0 0 1px rgba(167, 61, 53, 0.35),
+                 0 6px 18px rgba(167, 61, 53, 0.25);
+
+  /* Button states */
+  --bg-button-amber: var(--accent-amber-strong);
 }

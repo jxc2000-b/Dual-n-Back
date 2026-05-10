@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 540px;
+  width: clamp(320px, 60vmin, 600px);
   max-width: 100%;
 }
 
@@ -31,9 +31,17 @@
   padding: var(--s-2) var(--s-4);
   border-radius: var(--r-sm);
   font-weight: 600;
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
 }
+
+.train-page__start:hover { background: var(--accent-teal-strong); }
+.train-page__start:active { transform: translateY(1px); }
 
 .train-page__start--cancel {
   background: var(--accent-amber);
   color: var(--text-inverse);
 }
+
+.train-page__start--cancel:hover { background: var(--bg-button-amber); }

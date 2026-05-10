@@ -103,9 +103,7 @@ This document is the source of truth for parallel agent work. Each section names
 
 **Contract:** No component file may contain a literal hex color. Always reference a token. Add a token if one is missing.
 
-**Open (Track E — Polish):**
-- [ ] Add tokens for `--shadow-stim` (used by the active grid cell) and `--bg-button-amber` for the cancel button hover state.
-- [ ] Reduced-motion media query in `global.css` that nukes transitions.
+**Open (Track E — Polish):** ✅ done in Track E (see Changelog).
 
 ---
 
@@ -285,3 +283,4 @@ For a new agent picking up this repo:
 - 2026-05-10 — Track B landed (header N selector + Type: Dual + title icon). Added `SettingsProvider` / `useSettings()` in `src/hooks/useSettings.tsx`; TrainPage now consumes the shared hook. Settings page (Track D) should also use `useSettings().updateSettings` rather than calling `storage.saveSettings` directly.
 - 2026-05-10 — Track D landed (Settings page). Form bound to `useSettings()`, numeric inputs clamp on blur, live volume slider, hotkey-buttons toggle, danger-zone Reset/Clear. Added `clearSets()` to `StorageAdapter` so history clears without removing settings; `SupabaseAdapter` got the matching stub.
 - 2026-05-10 — Track C landed (Stats page). History table, daily rollups via `rollupByDay`, hand-rolled SVG sparklines for avg N + avg accuracy, today/7d/30d/all filter chips. New `StatsPage.css`.
+- 2026-05-10 — Track E landed (visual polish). Added `--shadow-stim` / `--bg-button-amber` tokens, `prefers-reduced-motion` query, anchor focus-visible rule. Grid stim now scale-in/fade-out via persistent `::after`; responsive `clamp(320px, 60vmin, 600px)`. HotkeyButtons get smooth tint transition. Toast plays slide-up entry + fade-out exit (internal leaving state).

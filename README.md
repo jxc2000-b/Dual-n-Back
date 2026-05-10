@@ -67,13 +67,14 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 - [x] Toggle: `showHotkeyButtons`
 - [x] Reset-to-defaults (confirm) and Clear-history (confirm). Required adding `clearSets()` to the `StorageAdapter` interface so history clears without nuking settings.
 
-#### Track E — Visual polish
-- [ ] Stim animation: 80 ms scale-in, hold for `stimulusDurationMs`, 140 ms fade-out
-- [ ] Hotkey button press flash (200 ms tint)
-- [ ] Toast slide-up + fade-out
-- [ ] Responsive sizing of grid (clamp(360px, 60vmin, 600px))
-- [ ] Focus rings consistent across header nav, buttons, selects
-- [ ] Reduced-motion media query disables transitions
+#### Track E — Visual polish — ✅ done
+- [x] Stim animation: 80 ms scale-in on activate, 140 ms fade-out on deactivate via a persistent `::after` layer on every cell. The "hold" duration is whatever stimulusDurationMs is set to (CSS-only, no JS coupling).
+- [x] Hotkey button press flash with smooth in/out transition + border tint shift; uses TrainPage's existing 180 ms timeout
+- [x] Toast slide-up + fade-in on entry, fade-out on exit. `Toast` schedules an internal "leaving" state ~180 ms before unmount so the dismiss animation plays.
+- [x] Responsive grid: `clamp(320px, 60vmin, 600px)` + `aspect-ratio: 1 / 1`. TrainPage bar and HotkeyButtons row match the same width.
+- [x] Focus-visible rule in `global.css` covers selects, inputs, buttons, anchors, and `[role="button"]`. Header nav gets the same teal outline.
+- [x] `@media (prefers-reduced-motion: reduce)` in `global.css` neutralizes all transitions and animations.
+- [x] Added `--shadow-stim` and `--bg-button-amber` tokens to `tokens.css` (was listed under Theme in PLAN.md).
 
 #### Track F — Tests (none today)
 - [ ] Unit tests for `engine/sequence.ts` (match rate within tolerance over N=10k trials)

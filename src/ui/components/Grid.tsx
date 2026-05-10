@@ -8,17 +8,18 @@ import './Grid.css';
 export interface GridProps {
   /** The cell currently lit. null when no stim is showing. */
   activeCell: Position | null;
-  /** Visual size in pixels. UI agent may swap to a responsive sizing scheme. */
+  /** Optional fixed visual size in pixels. Defaults to a responsive clamp(). */
   size?: number;
 }
 
 const CELLS: Position[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
-export function Grid({ activeCell, size = 540 }: GridProps) {
+export function Grid({ activeCell, size }: GridProps) {
+  const style = size != null ? { width: size, height: size } : undefined;
   return (
     <div
       className="grid"
-      style={{ width: size, height: size }}
+      style={style}
       role="img"
       aria-label="Dual N-Back grid"
     >

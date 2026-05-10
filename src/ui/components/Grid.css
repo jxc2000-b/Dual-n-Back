@@ -1,9 +1,9 @@
-/* Bare grid. UI agent: refine highlight color, add stim transition, internal padding for the colored block (see gridhighlighted.jpeg). */
-
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  width: clamp(320px, 60vmin, 600px);
+  aspect-ratio: 1 / 1;
   background: var(--bg-raised);
   border: 1px solid var(--border-subtle);
 }
@@ -13,10 +13,32 @@
   position: relative;
 }
 
-.grid__cell--active::after {
+/* The stim block lives permanently on every cell as a ::after layer so we
+   can animate opacity/scale on enter and exit. The --active modifier
+   triggers a fast scale-in (80ms); removing the class triggers a slower
+   fade-out (140ms) because the non-active selector controls the transition. */
+.grid__cell::after {
   content: '';
   position: absolute;
   inset: 12px;
   border-radius: var(--r-md);
   background: var(--color-stim-active);
+  opacity: 0;
+  transform: scale(0.7);
+  transform-origin: center;
+  transition: opacity 140ms var(--ease-out),
+              transform 140ms var(--ease-out),
+              box-shadow 140ms var(--ease-out);
+  pointer-events: none;
+  box-shadow: none;
+  will-change: opacity, transform;
+}
+
+.grid__cell--active::after {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: var(--shadow-stim);
+  transition: opacity 80ms var(--ease-out),
+              transform 80ms var(--ease-out),
+              box-shadow 80ms var(--ease-out);
 }
