@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useRef } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import type { GameConfig, SetResult, Trial } from '@app-types';
 import { generateSequence } from '@engine/sequence';
 import { scoreSet } from '@engine/scoring';
@@ -58,7 +58,7 @@ export function useGameSession(config: GameConfig): UseGameSession {
   })();
 
   const [state, dispatch] = useReducer(reducer, initial);
-  const lastResultRef = useRef<SetResult | null>(null);
+  const [lastResult, setLastResult] = useState<SetResult | null>(null);
 
   // Re-seed when config changes while idle.
   useEffect(() => {
@@ -111,7 +111,7 @@ export function useGameSession(config: GameConfig): UseGameSession {
   useEffect(() => {
     if (state.status !== 'finished') return;
     const score = scoreSet(state.trials, state.responses, state.config.n);
-    lastResultRef.current = {
+    setLastResult({
       id: `set-${state.startedAt}`,
       startedAt: state.startedAt,
       endedAt: Date.now(),
@@ -119,15 +119,24 @@ export function useGameSession(config: GameConfig): UseGameSession {
       trials: state.trials,
       responses: state.responses,
       score,
-    };
+    });
   }, [state.status, state.trials, state.responses, state.config, state.startedAt]);
 
-  const start = useCallback(() => dispatch({ type: 'start' }), []);
+  const start = useCallback(() => {
+    const t = generateSequence({
+      n: config.n,
+      trialsPerSet: config.trialsPerSet,
+      targetMatchRate: config.targetMatchRate,
+    });
+    trialsRef.current = t;
+    dispatch({ type: 'reset', config, trials: t });
+    dispatch({ type: 'start' });
+  }, [config]);
   const cancel = useCallback(() => dispatch({ type: 'cancel' }), []);
   const press = useCallback(
     (channel: 'position' | 'audio') => dispatch({ type: 'response', channel }),
     [],
   );
 
-  return { state, start, cancel, press, lastResult: lastResultRef.current };
+  return { state, start, cancel, press, lastResult };
 }

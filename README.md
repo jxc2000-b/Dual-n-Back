@@ -40,14 +40,14 @@ This repo is a **scaffold + non-UI implementations**. The engine, storage, audio
 Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 
 #### Track A — Train page wiring (`src/ui/pages/TrainPage.tsx`)
-- [ ] Instantiate `useGameSession(config)` with config derived from current settings + selected N
-- [ ] On state transitions: when `stimVisible` flips true and `currentIndex` advances, call `letterPlayer.play(state.trials[state.currentIndex].letter)` once
-- [ ] Pass `state.trials[state.currentIndex].position` (or `null`) to `<Grid activeCell={...} />`
-- [ ] Wire global `keydown`: `a` → `press('position')`, `l` → `press('audio')`. Ignore on input focus.
-- [ ] Start/Cancel button — call `start()` / `cancel()`. Switch between teal "Start" and amber "Cancel" per screenshots.
-- [ ] On `state.status === 'finished'`, call `storage.appendSet(lastResult)`, refresh side-panel data, re-seed for next set
-- [ ] If user changes N between sets, show `<Toast message="N-Back Level Changed" />` (see `levelschanged.jpeg`)
-- [ ] Trial counter `"{i+1} of {trialsPerSet}"`
+- [x] Instantiate `useGameSession(config)` with config derived from current settings + selected N
+- [x] On state transitions: when `stimVisible` flips true and `currentIndex` advances, call `letterPlayer.play(state.trials[state.currentIndex].letter)` once
+- [x] Pass `state.trials[state.currentIndex].position` (or `null`) to `<Grid activeCell={...} />`
+- [x] Wire global `keydown`: `a` → `press('position')`, `l` → `press('audio')`. Ignore on input focus.
+- [x] Start/Cancel button — call `start()` / `cancel()`. Switch between teal "Start" and amber "Cancel" per screenshots.
+- [x] On `state.status === 'finished'`, call `storage.appendSet(lastResult)`, refresh side-panel data, re-seed for next set
+- [x] If user changes N between sets, show `<Toast message="N-Back Level Changed" />` (see `levelschanged.jpeg`)
+- [x] Trial counter `"{i+1} of {trialsPerSet}"`
 
 #### Track B — Header controls (`src/ui/layout/AppShell.tsx`)
 - [ ] Right-aligned cluster: `Type: Dual` (static), `N-Back: <select 1..9>`

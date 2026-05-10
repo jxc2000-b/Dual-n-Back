@@ -32,3 +32,8 @@
   border-radius: var(--r-sm);
   font-weight: 600;
 }
+
+.train-page__start--cancel {
+  background: var(--accent-amber);
+  color: var(--text-inverse);
+}
