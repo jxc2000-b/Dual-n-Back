@@ -60,12 +60,12 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 - [ ] SVG sparkline of avg-N-over-time and avg-accuracy-over-time (no chart deps — hand-rolled SVG)
 - [ ] Filter chips: today, week, month, all
 
-#### Track D — Settings page (`src/ui/pages/SettingsPage.tsx`)
-- [ ] Form bound to `UserSettings`; load/save via `storage.loadSettings/saveSettings`
-- [ ] Numeric inputs with clamps: `trialsPerSet (8–60)`, `trialDurationMs (1500–6000)`, `stimulusDurationMs (200–1500)`, `defaultN (1–9)`
-- [ ] Volume slider 0..1 → calls `letterPlayer.setVolume`
-- [ ] Toggle: `showHotkeyButtons`
-- [ ] Reset-to-defaults button + clear-history (with confirm)
+#### Track D — Settings page (`src/ui/pages/SettingsPage.tsx`) — ✅ done
+- [x] Form bound to `UserSettings` via `useSettings()` (writes are persisted by the provider)
+- [x] Numeric inputs with clamps: `trialsPerSet (8–60)`, `trialDurationMs (1500–6000)`, `stimulusDurationMs (200–1500)`, `defaultN (1–9)`. Inputs accept free typing; clamp + persist on blur or Enter.
+- [x] Volume slider 0..1 — calls `letterPlayer.setVolume(v)` live; the new value also flows through `useSettings` so it survives reloads
+- [x] Toggle: `showHotkeyButtons`
+- [x] Reset-to-defaults (confirm) and Clear-history (confirm). Required adding `clearSets()` to the `StorageAdapter` interface so history clears without nuking settings.
 
 #### Track E — Visual polish
 - [ ] Stim animation: 80 ms scale-in, hold for `stimulusDurationMs`, 140 ms fade-out

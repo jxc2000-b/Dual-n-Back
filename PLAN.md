@@ -283,3 +283,4 @@ For a new agent picking up this repo:
 
 - 2026-05-10 — Initial scaffold + engine/audio/storage implementations + UI skeletons.
 - 2026-05-10 — Track B landed (header N selector + Type: Dual + title icon). Added `SettingsProvider` / `useSettings()` in `src/hooks/useSettings.tsx`; TrainPage now consumes the shared hook. Settings page (Track D) should also use `useSettings().updateSettings` rather than calling `storage.saveSettings` directly.
+- 2026-05-10 — Track D landed (Settings page). Form bound to `useSettings()`, numeric inputs clamp on blur, live volume slider, hotkey-buttons toggle, danger-zone Reset/Clear. Added `clearSets()` to `StorageAdapter` so history clears without removing settings; `SupabaseAdapter` got the matching stub.
