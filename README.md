@@ -49,10 +49,10 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 - [x] If user changes N between sets, show `<Toast message="N-Back Level Changed" />` (see `levelschanged.jpeg`)
 - [x] Trial counter `"{i+1} of {trialsPerSet}"`
 
-#### Track B — Header controls (`src/ui/layout/AppShell.tsx`)
-- [ ] Right-aligned cluster: `Type: Dual` (static), `N-Back: <select 1..9>`
-- [ ] Selected N persists to settings via `storage.saveSettings`
-- [ ] Build a small icon for the title (per screenshot) — keep monochrome / muted
+#### Track B — Header controls (`src/ui/layout/AppShell.tsx`) — ✅ done
+- [x] Right-aligned cluster: `Type: Dual` (static), `N-Back: <select 1..9>`
+- [x] Selected N is shared with the Train page via the new `useSettings()` hook + `<SettingsProvider>` (`src/hooks/useSettings.tsx`). Note: the per-session `selectedN` is intentionally decoupled from `settings.defaultN` — only the Settings page should write `defaultN` via `updateSettings`, so changing N for a single session doesn't overwrite the saved default.
+- [x] Small inline-SVG title icon (two outlined squares, monochrome — uses `currentColor`)
 
 #### Track C — Stats page (`src/ui/pages/StatsPage.tsx`)
 - [ ] Render history table from `storage.listSets()`
