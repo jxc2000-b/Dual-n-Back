@@ -3,6 +3,7 @@ import type { GameConfig, Position, SetResult, UserSettings } from '@app-types';
 import { DEFAULT_SETTINGS } from '@app-types';
 import { letterPlayer } from '@audio/letterPlayer';
 import { useGameSession } from '@hooks/useGameSession';
+import { useSettings } from '@hooks/useSettings';
 import { storage } from '@storage/index';
 import { Grid } from '@ui/components/Grid';
 import { HotkeyButtons } from '@ui/components/HotkeyButtons';
@@ -79,8 +80,7 @@ function isTextEntryTarget(target: EventTarget | null): boolean {
 }
 
 export function TrainPage() {
-  const [settings, setSettings] = useState<UserSettings>(DEFAULT_SETTINGS);
-  const [selectedN, setSelectedN] = useState(DEFAULT_SETTINGS.defaultN);
+  const { settings, selectedN, loaded } = useSettings();
   const [pressed, setPressed] = useState<Record<Channel, boolean>>({
     position: false,
     audio: false,
@@ -97,24 +97,12 @@ export function TrainPage() {
     position: null,
     audio: null,
   });
-  const didLoadSettingsRef = useRef(false);
-  const previousNRef = useRef(selectedN);
+  const previousNRef = useRef<number | null>(null);
 
+  // Sync audio volume whenever it changes (covers initial load + Settings updates).
   useEffect(() => {
-    let cancelled = false;
-    void storage.loadSettings().then((loaded) => {
-      if (cancelled) return;
-      const next = loaded ?? DEFAULT_SETTINGS;
-      setSettings(next);
-      setSelectedN(next.defaultN);
-      didLoadSettingsRef.current = true;
-      previousNRef.current = next.defaultN;
-      letterPlayer.setVolume(next.audioVolume);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    letterPlayer.setVolume(settings.audioVolume);
+  }, [settings.audioVolume]);
 
   const config = useMemo<GameConfig>(() => ({
     n: selectedN,
@@ -132,11 +120,15 @@ export function TrainPage() {
   const { state, start, cancel, press, lastResult } = useGameSession(config);
 
   useEffect(() => {
-    if (!didLoadSettingsRef.current) return;
+    if (!loaded) return;
+    if (previousNRef.current === null) {
+      previousNRef.current = selectedN;
+      return;
+    }
     if (previousNRef.current === selectedN) return;
     previousNRef.current = selectedN;
     setToast('N-Back Level Changed');
-  }, [selectedN]);
+  }, [loaded, selectedN]);
 
   useEffect(() => {
     let cancelled = false;
