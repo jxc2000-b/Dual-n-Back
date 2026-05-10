@@ -54,7 +54,7 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 - [x] Selected N is shared with the Train page via the new `useSettings()` hook + `<SettingsProvider>` (`src/hooks/useSettings.tsx`). Note: the per-session `selectedN` is intentionally decoupled from `settings.defaultN` — only the Settings page should write `defaultN` via `updateSettings`, so changing N for a single session doesn't overwrite the saved default.
 - [x] Small inline-SVG title icon (two outlined squares, monochrome — uses `currentColor`)
 
-#### Track C — Stats page (`src/ui/pages/StatsPage.tsx`)
+#### Track C — Stats page (`src/ui/pages/StatsPage.tsx`) — ✅ done
 - [x] Render history table from `storage.listSets()`
 - [x] Per-day rollup with `storage/aggregate.rollupByDay`
 - [x] SVG sparkline of avg-N-over-time and avg-accuracy-over-time (no chart deps — hand-rolled SVG)
