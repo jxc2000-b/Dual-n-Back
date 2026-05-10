@@ -55,10 +55,10 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 - [x] Small inline-SVG title icon (two outlined squares, monochrome — uses `currentColor`)
 
 #### Track C — Stats page (`src/ui/pages/StatsPage.tsx`)
-- [ ] Render history table from `storage.listSets()`
-- [ ] Per-day rollup with `storage/aggregate.rollupByDay`
-- [ ] SVG sparkline of avg-N-over-time and avg-accuracy-over-time (no chart deps — hand-rolled SVG)
-- [ ] Filter chips: today, week, month, all
+- [x] Render history table from `storage.listSets()`
+- [x] Per-day rollup with `storage/aggregate.rollupByDay`
+- [x] SVG sparkline of avg-N-over-time and avg-accuracy-over-time (no chart deps — hand-rolled SVG)
+- [x] Filter chips: today, week, month, all
 
 #### Track D — Settings page (`src/ui/pages/SettingsPage.tsx`) — ✅ done
 - [x] Form bound to `UserSettings` via `useSettings()` (writes are persisted by the provider)
