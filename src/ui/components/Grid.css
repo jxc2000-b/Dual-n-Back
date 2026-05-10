@@ -1,0 +1,22 @@
+/* Bare grid. UI agent: refine highlight color, add stim transition, internal padding for the colored block (see gridhighlighted.jpeg). */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+}
+
+.grid__cell {
+  border: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.grid__cell--active::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border-radius: var(--r-md);
+  background: var(--color-stim-active);
+}

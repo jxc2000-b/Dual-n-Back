@@ -1,0 +1,34 @@
+.train-page {
+  display: grid;
+  grid-template-columns: 1fr var(--side-panel-w);
+  gap: var(--s-5);
+  align-items: start;
+}
+
+.train-page__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.train-page__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 540px;
+  max-width: 100%;
+}
+
+.train-page__counter {
+  color: var(--text-secondary);
+  font-size: var(--fs-lg);
+}
+
+.train-page__start {
+  background: var(--accent-teal);
+  color: var(--text-primary);
+  padding: var(--s-2) var(--s-4);
+  border-radius: var(--r-sm);
+  font-weight: 600;
+}

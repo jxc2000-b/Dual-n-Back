@@ -1,0 +1,48 @@
+/* Bare layout. UI agent: refine spacing, add header controls cluster, polish nav. */
+
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  height: var(--header-h);
+  padding: 0 var(--s-5);
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.app-header__title {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+
+.app-header__nav {
+  display: flex;
+  gap: var(--s-4);
+}
+
+.app-header__nav a {
+  color: var(--text-secondary);
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--r-sm);
+}
+
+.app-header__nav a.active {
+  color: var(--text-primary);
+  background: var(--bg-sunken);
+}
+
+.app-header__controls { margin-left: auto; }
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  padding: var(--s-5);
+}
