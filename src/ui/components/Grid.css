@@ -35,10 +35,9 @@
 .grid__cell--active::after {
   opacity: 1;
   border-color: var(--color-stim-active);
-  background-color: rgba(92, 196, 255, 0.08);
+  background-color: transparent;
   background-image:
-    radial-gradient(circle, currentColor 1.6px, transparent 2.2px);
-  background-size: 14px 14px;
-  background-position: 7px 7px;
-  box-shadow: var(--shadow-stim);
+    radial-gradient(circle, currentColor 1px, transparent 1.4px);
+  background-size: 7px 7px;
+  background-position: 3px 3px;
 }
