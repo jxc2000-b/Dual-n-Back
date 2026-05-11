@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { useAuth } from '../auth/AuthContext';
 import { DEFAULT_SETTINGS, type UserSettings } from '@app-types';
 import { storage } from '@storage/index';
 
@@ -31,6 +32,7 @@ export interface SettingsContextValue {
 const SettingsContext = createContext<SettingsContextValue | null>(null);
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
   const [settings, setSettings] = useState<UserSettings>(DEFAULT_SETTINGS);
   const [selectedN, setSelectedNState] = useState(DEFAULT_SETTINGS.defaultN);
   const [loaded, setLoaded] = useState(false);
@@ -39,6 +41,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   // Initial load.
   useEffect(() => {
     let cancelled = false;
+    setLoaded(false);
     void storage.loadSettings().then((loaded) => {
       if (cancelled) return;
       const next = loaded ?? DEFAULT_SETTINGS;
@@ -49,7 +52,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [user?.id]);
 
   const updateSettings = useCallback((patch: Partial<UserSettings>) => {
     setSettings((current) => {

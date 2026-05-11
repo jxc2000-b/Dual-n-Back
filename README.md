@@ -96,9 +96,9 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 
 #### Track H — Future Supabase
 
-- [ ] Implement `SupabaseAdapter` (schema sketched at top of file)
-- [ ] Add a `/login` route + auth provider context
-- [ ] Swap the export in `src/storage/index.ts` once auth is present, keep `LocalStorageAdapter` as a guest fallback
+- [x] Implement `SupabaseAdapter` (schema sketched at top of file)
+- [x] Add a `/login` route + auth provider context
+- [x] Swap the export in `src/storage/index.ts` once auth is present, keep `LocalStorageAdapter` as a guest fallback
 
 ## Layout
 
