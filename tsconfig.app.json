@@ -2,10 +2,13 @@
   "compilerOptions": {
     "target": "ES2022",
     "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
-
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -13,25 +16,41 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": false,
-
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@engine/*": ["src/engine/*"],
-      "@audio/*": ["src/audio/*"],
-      "@storage/*": ["src/storage/*"],
-      "@ui/*": ["src/ui/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@app-types": ["src/types/index.ts"],
-      "@app-types/*": ["src/types/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@engine/*": [
+        "./src/engine/*"
+      ],
+      "@audio/*": [
+        "./src/audio/*"
+      ],
+      "@storage/*": [
+        "./src/storage/*"
+      ],
+      "@ui/*": [
+        "./src/ui/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@app-types": [
+        "./src/types/index.ts"
+      ],
+      "@app-types/*": [
+        "./src/types/*"
+      ]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "globals.d.ts"
+  ]
 }

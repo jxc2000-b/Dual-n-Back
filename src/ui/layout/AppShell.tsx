@@ -3,29 +3,9 @@ import { NavLink } from 'react-router-dom';
 import { useSettings } from '@hooks/useSettings';
 import './AppShell.css';
 
+
 const N_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
 
-function TitleIcon() {
-  // Two outlined squares — matches the icon shown in levelschanged.jpeg.
-  return (
-    <svg
-      className="app-header__icon"
-      viewBox="0 0 24 24"
-      width="22"
-      height="22"
-      aria-hidden="true"
-    >
-      <rect
-        x="3.5" y="3.5" width="8" height="8" rx="1.5"
-        fill="none" stroke="currentColor" strokeWidth="1.5"
-      />
-      <rect
-        x="12.5" y="12.5" width="8" height="8" rx="1.5"
-        fill="none" stroke="currentColor" strokeWidth="1.5"
-      />
-    </svg>
-  );
-}
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { selectedN, setSelectedN } = useSettings();
@@ -34,7 +14,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="app-shell">
       <header className="app-header">
         <div className="app-header__brand">
-          <TitleIcon />
+          
           <span className="app-header__title">Dual N-Back Training</span>
         </div>
 
