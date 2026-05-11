@@ -33,8 +33,8 @@ describe('scoreSet', () => {
   it('counts a true positive correctly (position)', () => {
     // N=2: trial 0 pos=3, trial 2 pos=3 → match; user presses position
     const trials = [
-      t(0, 3, 'A'), // dummy letter, not an allowed one but fine for pos test
-      t(1, 7, 'B'),
+      t(0, 3, 'H'), // letter chosen to differ from trial 2 so no audio match
+      t(1, 7, 'K'),
       t(2, 3, 'C'), // matches trial 0 position!
     ];
     const responses = [
@@ -54,8 +54,8 @@ describe('scoreSet', () => {
   it('counts a false negative correctly (position)', () => {
     // N=2: trial 2 matches trial 0, user does NOT press
     const trials = [
-      t(0, 3, 'A'),
-      t(1, 7, 'B'),
+      t(0, 3, 'H'),
+      t(1, 7, 'K'),
       t(2, 3, 'C'), // match on position
     ];
     const responses = [
@@ -75,8 +75,8 @@ describe('scoreSet', () => {
   it('counts a false positive correctly (position)', () => {
     // N=2: trial 2 does NOT match trial 0, user presses
     const trials = [
-      t(0, 3, 'A'),
-      t(1, 7, 'B'),
+      t(0, 3, 'H'),
+      t(1, 7, 'K'),
       t(2, 5, 'C'), // different position!
     ];
     const responses = [
@@ -96,8 +96,8 @@ describe('scoreSet', () => {
   it('counts a true negative correctly (position)', () => {
     // N=2: trial 2 does NOT match trial 0, user does NOT press
     const trials = [
-      t(0, 3, 'A'),
-      t(1, 7, 'B'),
+      t(0, 3, 'H'),
+      t(1, 7, 'K'),
       t(2, 5, 'C'), // different position
     ];
     const responses = [
