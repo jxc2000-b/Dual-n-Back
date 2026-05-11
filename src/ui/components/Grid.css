@@ -5,7 +5,9 @@
   width: clamp(320px, 60vmin, 600px);
   aspect-ratio: 1 / 1;
   background: var(--bg-raised);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-muted);
+  box-shadow: inset 0 0 0 1px rgba(92, 196, 255, 0.04),
+              var(--shadow-sm);
 }
 
 .grid__cell {
@@ -13,32 +15,30 @@
   position: relative;
 }
 
-/* The stim block lives permanently on every cell as a ::after layer so we
-   can animate opacity/scale on enter and exit. The --active modifier
-   triggers a fast scale-in (80ms); removing the class triggers a slower
-   fade-out (140ms) because the non-active selector controls the transition. */
+/* Track H: ASCII dot-matrix stim. Instant on/off — no transitions, no
+   animations — for snappy reaction-time feedback. The dot grid is a
+   pure CSS radial-gradient (no DOM, no font), tinted via currentColor
+   so themes can swap colors via a single token. */
 .grid__cell::after {
   content: '';
   position: absolute;
   inset: 12px;
-  border-radius: var(--r-md);
-  background: var(--color-stim-active);
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  background-image: none;
+  background-color: transparent;
+  color: var(--color-stim-active);
   opacity: 0;
-  transform: scale(0.7);
-  transform-origin: center;
-  transition: opacity 140ms var(--ease-out),
-              transform 140ms var(--ease-out),
-              box-shadow 140ms var(--ease-out);
   pointer-events: none;
-  box-shadow: none;
-  will-change: opacity, transform;
 }
 
 .grid__cell--active::after {
   opacity: 1;
-  transform: scale(1);
+  border-color: var(--color-stim-active);
+  background-color: rgba(92, 196, 255, 0.08);
+  background-image:
+    radial-gradient(circle, currentColor 1.6px, transparent 2.2px);
+  background-size: 14px 14px;
+  background-position: 7px 7px;
   box-shadow: var(--shadow-stim);
-  transition: opacity 80ms var(--ease-out),
-              transform 80ms var(--ease-out),
-              box-shadow 80ms var(--ease-out);
 }

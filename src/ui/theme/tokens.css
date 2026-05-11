@@ -1,34 +1,41 @@
 :root {
-  /* Surfaces — sampled from the reference screenshots */
-  --bg-base: #3a3d41;
-  --bg-raised: #45484c;
-  --bg-sunken: #2f3236;
-  --bg-header: #5a5e62;
-  --bg-overlay: #2a3633;
+  /* Surfaces — dark sci-fi terminal palette (blacks + deep blues) */
+  --bg-base: #0c0f17;
+  --bg-raised: #131826;
+  --bg-sunken: #080b13;
+  --bg-header: #0f1424;
+  --bg-overlay: #0a1020;
 
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-muted: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.22);
+  --border-subtle: rgba(126, 162, 222, 0.06);
+  --border-muted: rgba(126, 162, 222, 0.14);
+  --border-strong: rgba(126, 162, 222, 0.26);
 
-  /* Text */
-  --text-primary: #e7e3da;
-  --text-secondary: #b9b4ab;
-  --text-muted: #8b8780;
-  --text-inverse: #2b2f33;
+  /* Text — off-whites, no pure white */
+  --text-primary: #dde4f0;
+  --text-secondary: #92a0bd;
+  --text-muted: #5b687f;
+  --text-inverse: #0a0d15;
 
-  /* Accents */
-  --accent-teal: #3da193;
-  --accent-teal-strong: #4cb5a6;
-  --accent-amber: #e6b34a;
-  --accent-amber-strong: #efbe5d;
-  --accent-red: #a73d35;
-  --accent-red-strong: #c14b41;
+  /* Accents — keep variable names (--accent-teal etc.) so component CSS
+     doesn't need to change. Values now lean cyan-blue, muted amber, soft red. */
+  --accent-teal: #5cc4ff;
+  --accent-teal-strong: #82d6ff;
+  --accent-amber: #c79a55;
+  --accent-amber-strong: #dcb069;
+  --accent-red: #c45757;
+  --accent-red-strong: #db6e6e;
 
   /* Semantic */
-  --color-stim-active: var(--accent-red);
-  --color-correct: var(--accent-teal);
-  --color-incorrect: var(--accent-red);
+  --color-stim-active: var(--accent-teal);
+  --color-correct: #5ce0a3;
+  --color-incorrect: #e85a5a;
   --color-hotkey: var(--accent-teal);
+
+  /* Track H feedback flicker */
+  --feedback-correct: #5ce0a3;
+  --feedback-correct-bg: rgba(92, 224, 163, 0.22);
+  --feedback-incorrect: #e85a5a;
+  --feedback-incorrect-bg: rgba(232, 90, 90, 0.22);
 
   /* Spacing — 4pt scale */
   --s-1: 4px;
@@ -57,7 +64,8 @@
   --fs-xl: 22px;
   --fs-2xl: 28px;
 
-  /* Motion — keep tight; this is a reaction-time app */
+  /* Motion — Track H: kept for prior pieces, but new Track H visuals are
+     intentionally instant (no transitions). */
   --dur-instant: 80ms;
   --dur-fast: 140ms;
   --dur-base: 220ms;
@@ -68,11 +76,11 @@
   --header-h: 64px;
   --side-panel-w: 300px;
 
-  /* Shadows — subtle, this is a muted theme */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
-  --shadow-stim: 0 0 0 1px rgba(167, 61, 53, 0.35),
-                 0 6px 18px rgba(167, 61, 53, 0.25);
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.55);
+  --shadow-stim: 0 0 0 1px rgba(92, 196, 255, 0.36),
+                 0 6px 22px rgba(92, 196, 255, 0.18);
 
   /* Button states */
   --bg-button-amber: var(--accent-amber-strong);

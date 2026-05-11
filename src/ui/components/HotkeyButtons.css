@@ -14,20 +14,34 @@
   color: var(--color-hotkey);
   background: transparent;
   font-size: var(--fs-md);
-  transition: background var(--dur-base) var(--ease-out),
-              border-color var(--dur-base) var(--ease-out),
-              color var(--dur-base) var(--ease-out),
-              transform var(--dur-fast) var(--ease-out);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  /* Track H: no transitions — flicker should be instant. */
 }
 
 .hotkey:hover {
-  background: rgba(61, 161, 147, 0.08);
+  background: rgba(92, 196, 255, 0.08);
 }
 
 .hotkey:active { transform: translateY(1px); }
 
 .hotkey--pressed {
-  background: rgba(61, 161, 147, 0.22);
+  background: rgba(92, 196, 255, 0.22);
   border-color: var(--accent-teal-strong);
   color: var(--accent-teal-strong);
+}
+
+/* Feedback flicker — instant on/off, ~250ms hold from JS-side setTimeout.
+   `--correct` / `--incorrect` win over `--pressed` because they appear
+   later in the cascade. No transitions, per Track H "no animations". */
+.hotkey--correct {
+  background: var(--feedback-correct-bg);
+  border-color: var(--feedback-correct);
+  color: var(--feedback-correct);
+}
+
+.hotkey--incorrect {
+  background: var(--feedback-incorrect-bg);
+  border-color: var(--feedback-incorrect);
+  color: var(--feedback-incorrect);
 }

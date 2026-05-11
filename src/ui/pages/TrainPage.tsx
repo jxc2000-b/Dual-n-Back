@@ -2,17 +2,21 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { GameConfig, Position, SetResult, UserSettings } from '@app-types';
 import { DEFAULT_SETTINGS } from '@app-types';
 import { letterPlayer } from '@audio/letterPlayer';
+import { isMatch } from '@engine/sequence';
 import { useGameSession } from '@hooks/useGameSession';
 import { useSettings } from '@hooks/useSettings';
 import { storage } from '@storage/index';
 import { Grid } from '@ui/components/Grid';
 import { HotkeyButtons } from '@ui/components/HotkeyButtons';
+import type { Feedback } from '@ui/components/HotkeyButtons';
 import { SidePanel } from '@ui/components/SidePanel';
 import type { SidePanelProps } from '@ui/components/SidePanel';
 import { Toast } from '@ui/components/Toast';
 import './TrainPage.css';
 
 type Channel = 'position' | 'audio';
+
+const FEEDBACK_MS = 250;
 
 function startOfTodayMs(): number {
   const d = new Date();
@@ -99,6 +103,26 @@ export function TrainPage() {
   });
   const previousNRef = useRef<number | null>(null);
 
+  const [feedback, setFeedback] = useState<Record<Channel, Feedback>>({
+    position: undefined,
+    audio: undefined,
+  });
+  const feedbackTimersRef = useRef<Record<Channel, number | null>>({
+    position: null,
+    audio: null,
+  });
+  const lastEvaluatedIndexRef = useRef(-1);
+
+  const showFeedback = useCallback((channel: Channel, verdict: 'correct' | 'incorrect') => {
+    setFeedback((cur) => ({ ...cur, [channel]: verdict }));
+    const existing = feedbackTimersRef.current[channel];
+    if (existing != null) window.clearTimeout(existing);
+    feedbackTimersRef.current[channel] = window.setTimeout(() => {
+      setFeedback((cur) => ({ ...cur, [channel]: undefined }));
+      feedbackTimersRef.current[channel] = null;
+    }, FEEDBACK_MS);
+  }, []);
+
   // Sync audio volume whenever it changes (covers initial load + Settings updates).
   useEffect(() => {
     letterPlayer.setVolume(settings.audioVolume);
@@ -160,6 +184,32 @@ export function TrainPage() {
     });
   }, [lastResult]);
 
+  // Track H feedback: when a trial ends (currentIndex advances, or set finishes),
+  // grade the previous trial's responses and flicker the corresponding button.
+  useEffect(() => {
+    const toEval = state.status === 'finished'
+      ? state.trials.length - 1
+      : state.currentIndex - 1;
+    if (toEval < 0) return;
+    if (toEval <= lastEvaluatedIndexRef.current) return;
+    lastEvaluatedIndexRef.current = toEval;
+
+    const resp = state.responses[toEval];
+    if (!resp) return;
+    if (resp.position) {
+      showFeedback(
+        'position',
+        isMatch(state.trials, toEval, state.config.n, 'position') ? 'correct' : 'incorrect',
+      );
+    }
+    if (resp.audio) {
+      showFeedback(
+        'audio',
+        isMatch(state.trials, toEval, state.config.n, 'audio') ? 'correct' : 'incorrect',
+      );
+    }
+  }, [state.currentIndex, state.status, state.responses, state.trials, state.config.n, showFeedback]);
+
   const handlePress = useCallback((channel: Channel) => {
     press(channel);
     setPressed((current) => ({ ...current, [channel]: true }));
@@ -192,6 +242,9 @@ export function TrainPage() {
     Object.values(pressTimersRef.current).forEach((timer) => {
       if (timer != null) window.clearTimeout(timer);
     });
+    Object.values(feedbackTimersRef.current).forEach((timer) => {
+      if (timer != null) window.clearTimeout(timer);
+    });
   }, []);
 
   const handleStartCancel = async () => {
@@ -201,6 +254,8 @@ export function TrainPage() {
     }
 
     playedIndexRef.current = -1;
+    lastEvaluatedIndexRef.current = -1;
+    setFeedback({ position: undefined, audio: undefined });
     try {
       await letterPlayer.resume();
       await letterPlayer.preload();
@@ -242,6 +297,8 @@ export function TrainPage() {
             onAudio={() => handlePress('audio')}
             positionPressed={pressed.position}
             audioPressed={pressed.audio}
+            positionFeedback={feedback.position}
+            audioFeedback={feedback.audio}
           />
         ) : null}
       </section>

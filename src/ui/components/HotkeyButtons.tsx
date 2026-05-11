@@ -1,13 +1,26 @@
 import './HotkeyButtons.css';
 
-// SKELETON — wire to onPress callbacks; press feedback (200ms tint) when active.
-// UI agent: also wire global keydown ('a' and 'l') in TrainPage.
+export type Feedback = 'correct' | 'incorrect' | null | undefined;
 
 export interface HotkeyButtonsProps {
   onPosition: () => void;
   onAudio: () => void;
   positionPressed?: boolean;
   audioPressed?: boolean;
+  positionFeedback?: Feedback;
+  audioFeedback?: Feedback;
+}
+
+function classes(
+  pressed: boolean | undefined,
+  feedback: Feedback,
+): string {
+  return [
+    'hotkey',
+    pressed ? 'hotkey--pressed' : '',
+    feedback === 'correct' ? 'hotkey--correct' : '',
+    feedback === 'incorrect' ? 'hotkey--incorrect' : '',
+  ].filter(Boolean).join(' ');
 }
 
 export function HotkeyButtons({
@@ -15,19 +28,21 @@ export function HotkeyButtons({
   onAudio,
   positionPressed,
   audioPressed,
+  positionFeedback,
+  audioFeedback,
 }: HotkeyButtonsProps) {
   return (
     <div className="hotkeys">
       <button
         type="button"
-        className={`hotkey${positionPressed ? ' hotkey--pressed' : ''}`}
+        className={classes(positionPressed, positionFeedback)}
         onClick={onPosition}
       >
         A: Position
       </button>
       <button
         type="button"
-        className={`hotkey${audioPressed ? ' hotkey--pressed' : ''}`}
+        className={classes(audioPressed, audioFeedback)}
         onClick={onAudio}
       >
         L: Audio

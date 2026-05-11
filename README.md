@@ -93,12 +93,11 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 - [x] Add a `/login` route + auth provider context
 - [x] Swap the export in `src/storage/index.ts` once auth is present, keep `LocalStorageAdapter` as a guest fallback
 
-#### Track H - Feedback & More visual polishing
-
-- [ ] Implement some sort of signal that lets the user know if their guess was correct
-- [ ] At the end of each turn, if the user had chosen an answer, the position or audio button should briefly flicker to two possible colors; red if they were wrong, green if they were right
-- [ ] Change the color themes from grey and teal and red, to something with dark blacks, dark blues and purples and off-whites, use colors like these #25294B #A9A7BB #242845, give it an ASCII scifi vibe
-- [ ] Use ASCII (or something that looks like ASCII) for the highlighted squares in the grid.
+#### Track H - Feedback & More visual polishing — ✅ done
+- [x] Per-press correctness signal: each end-of-trial verdict drives a button color flicker (combined with the new green/red feedback colors below).
+- [x] End-of-trial flicker on the channel the user pressed — green (`--feedback-correct`) if `isMatch` agrees, red (`--feedback-incorrect`) otherwise. Held for 250 ms via JS setTimeout; no CSS transitions (instant on/off, snappy).
+- [x] Theme retuned to dark blacks (`#0c0f17`), deep blues (`#131826`), off-whites (`#dde4f0`), cyan accent (`#5cc4ff`). Token *names* preserved (`--accent-teal`, etc.) so no component imports needed touching.
+- [x] Grid stim rendered as an ASCII dot-matrix via `radial-gradient(circle, currentColor 1.6px, transparent 2.2px)` repeated on a 14 px grid. Pure CSS, no DOM, no font dependency. Toggles instantly on/off — no scale-in/fade.
 
 ## Layout
 
