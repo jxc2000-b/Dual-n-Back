@@ -212,18 +212,19 @@ This document is the source of truth for parallel agent work. Each section names
 
 ## 9. Tests (Track F)
 
-**Status:** None.
+**Status:** ✅ Done. Vitest configured, 25 tests passing across sequence and scoring.
 
-**Suggested setup:**
+**Setup:**
 ```bash
-npm i -D vitest @vitest/ui
+npm i -D vitest
 ```
-Add `"test": "vitest"` to `package.json`. Tests live next to source as `*.test.ts`.
+Scripts: `npm test` (single run) and `npm run test:watch` (watch mode). Tests live next to source as `*.test.ts`.
 
-**First targets:**
-- `src/engine/sequence.test.ts` — match rate, dual-match probability, edge cases (`n >= trialsPerSet`).
-- `src/engine/scoring.test.ts` — exhaustive bucket coverage, accuracy formula.
-- `src/storage/aggregate.test.ts` — `rollupByDay` boundary at midnight.
+**Landed:**
+- `src/engine/__tests__/sequence.test.ts` — 11 tests: match rate tolerance over 10k trials (pos + audio), boundary rates 0/1, valid positions/letters, first-n never matches, isMatch + countMatches.
+- `src/engine/__tests__/scoring.test.ts` — 14 tests: every TP/FP/TN/FN bucket for both channels, dual n-back scenarios (both hit, one hit one miss), mixed aggregate accuracy, n=1, empty responses, no trials beyond n.
+- `vitest.config.ts` — extends vite config with path alias resolution.
+- `npm test` / `npm run test:watch` added to `package.json`.
 
 ---
 
@@ -284,3 +285,4 @@ For a new agent picking up this repo:
 - 2026-05-10 — Track D landed (Settings page). Form bound to `useSettings()`, numeric inputs clamp on blur, live volume slider, hotkey-buttons toggle, danger-zone Reset/Clear. Added `clearSets()` to `StorageAdapter` so history clears without removing settings; `SupabaseAdapter` got the matching stub.
 - 2026-05-10 — Track C landed (Stats page). History table, daily rollups via `rollupByDay`, hand-rolled SVG sparklines for avg N + avg accuracy, today/7d/30d/all filter chips. New `StatsPage.css`.
 - 2026-05-10 — Track E landed (visual polish). Added `--shadow-stim` / `--bg-button-amber` tokens, `prefers-reduced-motion` query, anchor focus-visible rule. Grid stim now scale-in/fade-out via persistent `::after`; responsive `clamp(320px, 60vmin, 600px)`. HotkeyButtons get smooth tint transition. Toast plays slide-up entry + fade-out exit (internal leaving state).
+- 2026-05-10 — Track F landed (tests). Vitest configured with 25 tests: sequence match-rate tolerance over 10k trials (pos + audio, boundary 0/1 rates), scoring TP/FP/TN/FN bucket coverage (both channels, dual scenarios, n=1, mixed aggregates). Added `vitest.config.ts` with path alias resolution, `npm test` and `npm run test:watch` scripts.

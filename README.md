@@ -76,10 +76,10 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 - [x] `@media (prefers-reduced-motion: reduce)` in `global.css` neutralizes all transitions and animations.
 - [x] Added `--shadow-stim` and `--bg-button-amber` tokens to `tokens.css` (was listed under Theme in PLAN.md).
 
-#### Track F — Tests (none today)
-- [ ] Unit tests for `engine/sequence.ts` (match rate within tolerance over N=10k trials)
-- [ ] Unit tests for `engine/scoring.ts` (every TP/FP/TN/FN bucket)
-- [ ] Vitest is the suggested runner — no setup yet, free choice
+#### Track F — Tests ✅ done
+- [x] Unit tests for `engine/sequence.ts` (match rate within tolerance over N=10k trials)
+- [x] Unit tests for `engine/scoring.ts` (`every TP/FP/TN/FN bucket`)
+- [x] Vitest is the suggested runner — no setup yet, free choice
 
 #### Track G — Future Supabase
 - [ ] Implement `SupabaseAdapter` (schema sketched at top of file)
