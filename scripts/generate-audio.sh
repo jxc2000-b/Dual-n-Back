@@ -33,7 +33,7 @@ for L in "${LETTERS[@]}"; do
   WAV="$(mktemp -t dnb_${L}_XXXXXX).aiff"
   case "$ENGINE" in
     say)
-      say -v "Daniel" -o "$WAV" --data-format=LEI16@22050 "$L"
+      say -o "$WAV" "$L"
       ;;
     espeak-ng)
       espeak-ng -v en-us -s 140 -p 35 -w "$WAV" "$L"

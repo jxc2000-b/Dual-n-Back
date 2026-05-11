@@ -40,6 +40,7 @@ This repo is a **scaffold + non-UI implementations**. The engine, storage, audio
 Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 
 #### Track A — Train page wiring (`src/ui/pages/TrainPage.tsx`)
+
 - [x] Instantiate `useGameSession(config)` with config derived from current settings + selected N
 - [x] On state transitions: when `stimVisible` flips true and `currentIndex` advances, call `letterPlayer.play(state.trials[state.currentIndex].letter)` once
 - [x] Pass `state.trials[state.currentIndex].position` (or `null`) to `<Grid activeCell={...} />`
@@ -50,17 +51,20 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 - [x] Trial counter `"{i+1} of {trialsPerSet}"`
 
 #### Track B — Header controls (`src/ui/layout/AppShell.tsx`) — ✅ done
+
 - [x] Right-aligned cluster: `Type: Dual` (static), `N-Back: <select 1..9>`
 - [x] Selected N is shared with the Train page via the new `useSettings()` hook + `<SettingsProvider>` (`src/hooks/useSettings.tsx`). Note: the per-session `selectedN` is intentionally decoupled from `settings.defaultN` — only the Settings page should write `defaultN` via `updateSettings`, so changing N for a single session doesn't overwrite the saved default.
 - [x] Small inline-SVG title icon (two outlined squares, monochrome — uses `currentColor`)
 
 #### Track C — Stats page (`src/ui/pages/StatsPage.tsx`) — ✅ done
+
 - [x] Render history table from `storage.listSets()`
 - [x] Per-day rollup with `storage/aggregate.rollupByDay`
 - [x] SVG sparkline of avg-N-over-time and avg-accuracy-over-time (no chart deps — hand-rolled SVG)
 - [x] Filter chips: today, week, month, all
 
 #### Track D — Settings page (`src/ui/pages/SettingsPage.tsx`) — ✅ done
+
 - [x] Form bound to `UserSettings` via `useSettings()` (writes are persisted by the provider)
 - [x] Numeric inputs with clamps: `trialsPerSet (8–60)`, `trialDurationMs (1500–6000)`, `stimulusDurationMs (200–1500)`, `defaultN (1–9)`. Inputs accept free typing; clamp + persist on blur or Enter.
 - [x] Volume slider 0..1 — calls `letterPlayer.setVolume(v)` live; the new value also flows through `useSettings` so it survives reloads
@@ -68,6 +72,7 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 - [x] Reset-to-defaults (confirm) and Clear-history (confirm). Required adding `clearSets()` to the `StorageAdapter` interface so history clears without nuking settings.
 
 #### Track E — Visual polish — ✅ done
+
 - [x] Stim animation: 80 ms scale-in on activate, 140 ms fade-out on deactivate via a persistent `::after` layer on every cell. The "hold" duration is whatever stimulusDurationMs is set to (CSS-only, no JS coupling).
 - [x] Hotkey button press flash with smooth in/out transition + border tint shift; uses TrainPage's existing 180 ms timeout
 - [x] Toast slide-up + fade-in on entry, fade-out on exit. `Toast` schedules an internal "leaving" state ~180 ms before unmount so the dismiss animation plays.
@@ -77,11 +82,20 @@ Search the codebase for `TODO(ui-agent)` to find every site. Grouped by track:
 - [x] Added `--shadow-stim` and `--bg-button-amber` tokens to `tokens.css` (was listed under Theme in PLAN.md).
 
 #### Track F — Tests ✅ done
+
 - [x] Unit tests for `engine/sequence.ts` (match rate within tolerance over N=10k trials)
 - [x] Unit tests for `engine/scoring.ts` (`every TP/FP/TN/FN bucket`)
 - [x] Vitest is the suggested runner — no setup yet, free choice
 
-#### Track G — Future Supabase
+#### Track G - Feedback & More visual polishing
+
+- [ ] Implement some sort of signal that lets the user know if their guess was correct
+- [ ] At the end of each turn, if the user had chosen an answer, the position or audio button should briefly flicker to two possible colors; red if they were wrong, green if they were right
+- [ ] Change the color themes from grey and teal and red, to something with dark blacks, dark blues and purples and off-whites, use colors like these #25294B #A9A7BB #242845, give it an ASCII scifi vibe
+- [ ] Use ASCII (or something that looks like ASCII) for the highlighted squares in the grid.
+
+#### Track H — Future Supabase
+
 - [ ] Implement `SupabaseAdapter` (schema sketched at top of file)
 - [ ] Add a `/login` route + auth provider context
 - [ ] Swap the export in `src/storage/index.ts` once auth is present, keep `LocalStorageAdapter` as a guest fallback
@@ -110,15 +124,15 @@ scripts/          # generate-audio.sh
 
 ## Module boundaries (so agents can work in parallel without stepping on each other)
 
-| Track | Owns | Imports allowed | Imports forbidden |
-|-------|------|-----------------|-------------------|
-| Engine | `src/engine/`, `src/types/` | `src/types` | React, DOM, anything else |
-| Audio | `src/audio/` | `src/types` | React, DOM (besides Web Audio) |
-| Storage | `src/storage/` | `src/types` | React, DOM (besides `localStorage`) |
-| UI/Layout | `src/ui/layout/`, `App.tsx`, `main.tsx` | everything | — |
-| UI/Train (Track A) | `src/ui/pages/TrainPage.tsx`, `src/ui/components/Grid.tsx`, `HotkeyButtons.tsx`, `Toast.tsx` | engine, audio, storage, hooks | — |
-| UI/Stats (Track C) | `src/ui/pages/StatsPage.tsx` | storage, types | engine internals |
-| UI/Settings (Track D) | `src/ui/pages/SettingsPage.tsx` | storage, audio, types | engine internals |
-| Theme | `src/ui/theme/` | — | — |
+| Track                 | Owns                                                                                         | Imports allowed               | Imports forbidden                   |
+| --------------------- | -------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------- |
+| Engine                | `src/engine/`, `src/types/`                                                                  | `src/types`                   | React, DOM, anything else           |
+| Audio                 | `src/audio/`                                                                                 | `src/types`                   | React, DOM (besides Web Audio)      |
+| Storage               | `src/storage/`                                                                               | `src/types`                   | React, DOM (besides `localStorage`) |
+| UI/Layout             | `src/ui/layout/`, `App.tsx`, `main.tsx`                                                      | everything                    | —                                   |
+| UI/Train (Track A)    | `src/ui/pages/TrainPage.tsx`, `src/ui/components/Grid.tsx`, `HotkeyButtons.tsx`, `Toast.tsx` | engine, audio, storage, hooks | —                                   |
+| UI/Stats (Track C)    | `src/ui/pages/StatsPage.tsx`                                                                 | storage, types                | engine internals                    |
+| UI/Settings (Track D) | `src/ui/pages/SettingsPage.tsx`                                                              | storage, audio, types         | engine internals                    |
+| Theme                 | `src/ui/theme/`                                                                              | —                             | —                                   |
 
 If two agents both need to edit a file in this list, that's a sign the boundary needs a new helper module — extract instead of fighting over the file.
