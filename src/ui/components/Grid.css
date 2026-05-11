@@ -24,7 +24,6 @@
   position: absolute;
   inset: 12px;
   border: 1px solid transparent;
-  border-radius: var(--r-sm);
   background-image: none;
   background-color: transparent;
   color: var(--color-stim-active);
