@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { GameConfig, Position, SetResult, UserSettings } from '@app-types';
 import { DEFAULT_SETTINGS } from '@app-types';
 import { letterPlayer } from '@audio/letterPlayer';
+import { isMatch } from '@engine/sequence';
 import { useGameSession } from '@hooks/useGameSession';
 import { useSettings } from '@hooks/useSettings';
 import { storage } from '@storage/index';
@@ -13,6 +14,7 @@ import { Toast } from '@ui/components/Toast';
 import './TrainPage.css';
 
 type Channel = 'position' | 'audio';
+type Feedback = 'correct' | 'incorrect';
 
 function startOfTodayMs(): number {
   const d = new Date();
@@ -85,6 +87,10 @@ export function TrainPage() {
     position: false,
     audio: false,
   });
+  const [feedback, setFeedback] = useState<Record<Channel, Feedback | null>>({
+    position: null,
+    audio: null,
+  });
   const [toast, setToast] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [panelData, setPanelData] = useState<
@@ -97,6 +103,11 @@ export function TrainPage() {
     position: null,
     audio: null,
   });
+  const feedbackTimersRef = useRef<Record<Channel, number | null>>({
+    position: null,
+    audio: null,
+  });
+  const evaluatedIndexRef = useRef(-1);
   const previousNRef = useRef<number | null>(null);
 
   // Sync audio volume whenever it changes (covers initial load + Settings updates).
@@ -118,6 +129,17 @@ export function TrainPage() {
   ]);
 
   const { state, start, cancel, press, lastResult } = useGameSession(config);
+
+  const showFeedback = useCallback((channel: Channel, result: Feedback) => {
+    setFeedback((current) => ({ ...current, [channel]: result }));
+
+    const existing = feedbackTimersRef.current[channel];
+    if (existing != null) window.clearTimeout(existing);
+    feedbackTimersRef.current[channel] = window.setTimeout(() => {
+      setFeedback((current) => ({ ...current, [channel]: null }));
+      feedbackTimersRef.current[channel] = null;
+    }, 260);
+  }, []);
 
   useEffect(() => {
     if (!loaded) return;
@@ -160,6 +182,32 @@ export function TrainPage() {
     });
   }, [lastResult]);
 
+  useEffect(() => {
+    const completedIndex = state.status === 'finished'
+      ? state.currentIndex
+      : state.currentIndex - 1;
+    if (state.status !== 'running' && state.status !== 'finished') return;
+    if (completedIndex < state.config.n) return;
+    if (completedIndex === evaluatedIndexRef.current) return;
+
+    const response = state.responses[completedIndex];
+    if (!response) return;
+
+    evaluatedIndexRef.current = completedIndex;
+    (['position', 'audio'] as const).forEach((channel) => {
+      if (!response[channel]) return;
+      const matched = isMatch(state.trials, completedIndex, state.config.n, channel);
+      showFeedback(channel, matched ? 'correct' : 'incorrect');
+    });
+  }, [
+    showFeedback,
+    state.config.n,
+    state.currentIndex,
+    state.responses,
+    state.status,
+    state.trials,
+  ]);
+
   const handlePress = useCallback((channel: Channel) => {
     press(channel);
     setPressed((current) => ({ ...current, [channel]: true }));
@@ -192,6 +240,9 @@ export function TrainPage() {
     Object.values(pressTimersRef.current).forEach((timer) => {
       if (timer != null) window.clearTimeout(timer);
     });
+    Object.values(feedbackTimersRef.current).forEach((timer) => {
+      if (timer != null) window.clearTimeout(timer);
+    });
   }, []);
 
   const handleStartCancel = async () => {
@@ -201,6 +252,8 @@ export function TrainPage() {
     }
 
     playedIndexRef.current = -1;
+    evaluatedIndexRef.current = -1;
+    setFeedback({ position: null, audio: null });
     try {
       await letterPlayer.resume();
       await letterPlayer.preload();
@@ -242,6 +295,8 @@ export function TrainPage() {
             onAudio={() => handlePress('audio')}
             positionPressed={pressed.position}
             audioPressed={pressed.audio}
+            positionFeedback={feedback.position}
+            audioFeedback={feedback.audio}
           />
         ) : null}
       </section>

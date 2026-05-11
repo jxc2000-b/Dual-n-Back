@@ -5,12 +5,25 @@
   width: clamp(320px, 60vmin, 600px);
   aspect-ratio: 1 / 1;
   background: var(--bg-raised);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-muted);
+  box-shadow: inset 0 0 0 1px rgba(123, 223, 242, 0.04),
+              var(--shadow-sm);
 }
 
 .grid__cell {
   border: 1px solid var(--border-subtle);
   position: relative;
+  overflow: hidden;
+}
+
+.grid__cell::before {
+  content: attr(data-cell);
+  position: absolute;
+  left: var(--s-2);
+  top: var(--s-2);
+  color: rgba(169, 167, 187, 0.26);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
 }
 
 /* The stim block lives permanently on every cell as a ::after layer so we
@@ -18,11 +31,20 @@
    triggers a fast scale-in (80ms); removing the class triggers a slower
    fade-out (140ms) because the non-active selector controls the transition. */
 .grid__cell::after {
-  content: '';
+  content: '[####]';
   position: absolute;
   inset: 12px;
-  border-radius: var(--r-md);
-  background: var(--color-stim-active);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--accent-purple-strong);
+  border-radius: var(--r-sm);
+  background: rgba(139, 124, 246, 0.22);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: clamp(18px, 4.2vmin, 42px);
+  font-weight: 700;
+  letter-spacing: 0;
+  text-shadow: 0 0 12px rgba(177, 166, 255, 0.72);
   opacity: 0;
   transform: scale(0.7);
   transform-origin: center;
