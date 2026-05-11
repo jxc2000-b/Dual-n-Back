@@ -1,36 +1,32 @@
 :root {
-  /* Surfaces — dark terminal / sci-fi palette */
-  --bg-base: #121522;
-  --bg-raised: #25294b;
-  --bg-sunken: #171a31;
-  --bg-header: #242845;
-  --bg-overlay: #101321;
+  /* Surfaces — sampled from the reference screenshots */
+  --bg-base: #3a3d41;
+  --bg-raised: #45484c;
+  --bg-sunken: #2f3236;
+  --bg-header: #5a5e62;
+  --bg-overlay: #2a3633;
 
-  --border-subtle: rgba(169, 167, 187, 0.12);
-  --border-muted: rgba(169, 167, 187, 0.22);
-  --border-strong: rgba(229, 226, 240, 0.42);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-muted: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.22);
 
   /* Text */
-  --text-primary: #f2eef8;
-  --text-secondary: #c9c6da;
-  --text-muted: #a9a7bb;
-  --text-inverse: #121522;
+  --text-primary: #e7e3da;
+  --text-secondary: #b9b4ab;
+  --text-muted: #8b8780;
+  --text-inverse: #2b2f33;
 
   /* Accents */
-  --accent-teal: #7bdff2;
-  --accent-teal-strong: #a4f1ff;
-  --accent-amber: #f1c75b;
-  --accent-amber-strong: #ffe08a;
-  --accent-red: #ff5b7f;
-  --accent-red-strong: #ff86a2;
-  --accent-purple: #8b7cf6;
-  --accent-purple-strong: #b1a6ff;
-  --accent-green: #65f0a5;
-  --accent-green-strong: #96ffc4;
+  --accent-teal: #3da193;
+  --accent-teal-strong: #4cb5a6;
+  --accent-amber: #e6b34a;
+  --accent-amber-strong: #efbe5d;
+  --accent-red: #a73d35;
+  --accent-red-strong: #c14b41;
 
   /* Semantic */
-  --color-stim-active: var(--accent-purple);
-  --color-correct: var(--accent-green);
+  --color-stim-active: var(--accent-red);
+  --color-correct: var(--accent-teal);
   --color-incorrect: var(--accent-red);
   --color-hotkey: var(--accent-teal);
 
@@ -72,11 +68,11 @@
   --header-h: 64px;
   --side-panel-w: 300px;
 
-  /* Shadows — subtle, this is a dark interface */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.36);
-  --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.46);
-  --shadow-stim: 0 0 0 1px rgba(177, 166, 255, 0.58),
-                 0 0 26px rgba(139, 124, 246, 0.44);
+  /* Shadows — subtle, this is a muted theme */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-stim: 0 0 0 1px rgba(167, 61, 53, 0.35),
+                 0 6px 18px rgba(167, 61, 53, 0.25);
 
   /* Button states */
   --bg-button-amber: var(--accent-amber-strong);

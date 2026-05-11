@@ -21,49 +21,13 @@
 }
 
 .hotkey:hover {
-  background: rgba(123, 223, 242, 0.08);
+  background: rgba(61, 161, 147, 0.08);
 }
 
 .hotkey:active { transform: translateY(1px); }
 
 .hotkey--pressed {
-  background: rgba(123, 223, 242, 0.22);
+  background: rgba(61, 161, 147, 0.22);
   border-color: var(--accent-teal-strong);
   color: var(--accent-teal-strong);
-}
-
-.hotkey--correct {
-  animation: hotkey-correct 260ms var(--ease-out);
-}
-
-.hotkey--incorrect {
-  animation: hotkey-incorrect 260ms var(--ease-out);
-}
-
-@keyframes hotkey-correct {
-  0%, 100% {
-    background: transparent;
-    border-color: var(--color-hotkey);
-    color: var(--color-hotkey);
-  }
-  45% {
-    background: rgba(101, 240, 165, 0.28);
-    border-color: var(--color-correct);
-    color: var(--color-correct);
-    box-shadow: 0 0 18px rgba(101, 240, 165, 0.22);
-  }
-}
-
-@keyframes hotkey-incorrect {
-  0%, 100% {
-    background: transparent;
-    border-color: var(--color-hotkey);
-    color: var(--color-hotkey);
-  }
-  45% {
-    background: rgba(255, 91, 127, 0.26);
-    border-color: var(--color-incorrect);
-    color: var(--color-incorrect);
-    box-shadow: 0 0 18px rgba(255, 91, 127, 0.24);
-  }
 }
