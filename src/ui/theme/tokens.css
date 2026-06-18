@@ -18,6 +18,8 @@
 
   /* Accents — keep variable names (--accent-teal etc.) so component CSS
      doesn't need to change. Values now lean cyan-blue, muted amber, soft red. */
+  
+  --accent-white: #d7d7d7;
   --accent-teal: #5cc4ff;
   --accent-teal-strong: #82d6ff;
   --accent-amber: #c79a55;
@@ -26,7 +28,7 @@
   --accent-red-strong: #db6e6e;
 
   /* Semantic */
-  --color-stim-active: var(--accent-teal);
+  --color-stim-active: var(--accent-white);
   --color-correct: #5ce0a3;
   --color-incorrect: #e85a5a;
   --color-hotkey: var(--accent-teal);
