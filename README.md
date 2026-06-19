@@ -2,6 +2,8 @@
 
 A browser-based Dual N-Back working-memory training game. TypeScript, React, Vite, vanilla CSS, no heavy dependencies.
 
+> **This is a fully agent-driven project.** Every part of it — the scaffold, engine, UI, tests, theme, and even this README — was written by AI coding agents. The repo is structured (see [`PLAN.md`](./PLAN.md) and the module boundaries below) specifically so multiple agents can work in parallel without stepping on each other.
+
 ## Stack
 
 - **Vite + React 18 + TypeScript** (strict)

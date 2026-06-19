@@ -25,6 +25,13 @@ export function AppShell({ children }: { children: ReactNode }) {
           <NavLink to="/stats">Stats</NavLink>
           <NavLink to="/settings">Settings</NavLink>
           <NavLink to="/login">{user ? 'Account' : 'Login'}</NavLink>
+          <a
+            href="https://github.com/jxc2000-b/dual-n-back"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
         </nav>
 
         <div className="app-header__controls">
